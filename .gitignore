@@ -1,3 +1,7 @@
+<<<<<<< HEAD
 .venv/
+=======
+SteamReviewRewrite/
+>>>>>>> ef5d983 (Initial commit. Setted up the django project with tailwindcss.)
 __pycache__/
 
