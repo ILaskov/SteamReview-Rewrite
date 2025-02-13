@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review nr.{{ review.pk }}</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" type="text/css">
+</head>
+<body class="font-sans bg-sky-950 flex">
+    <div class="basis-3/5 bg-sky-800 rounded-lg m-6 p-6 overflow-auto">
+        {# Displaying games rating #}
+        <div
+            class="border px-6 py-2 rounded-md text-center items-center justify-center w-20
+            {% if review.rating == '++' %} bg-green-600
+            {% elif review.rating == '+' %} bg-green-400
+            {% elif review.rating == '+-' %} bg-yellow-400
+            {% elif review.rating == '-' %} bg-red-400
+            {% elif review.rating == '--' %} bg-red-600
+            {% else %} bg-gray-300 {% endif %}">
+            {{ review.rating }}
+        </div>
+        {# Displaying games review #}
+        <div class="border mt-4 p-4 bg-white rounded-md">
+            {{ review.review_text|safe }}
+        </div>
+        {# Time and date of when the review was posted #}
+        <p class="text-sm text-gray-300 mt-4">Posted on {{ review.timestamp }}</p>
+        {# Button to get you back to main page #}
+        <a href="{% url 'index' %}" class="inline-block mt-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Back</a>
+    </div>
+    
+    {# Game details #}
+    <div class="w-1/4 bg-sky-800 text-white flex flex-col rounded-lg m-6 p-6 fixed right-0 top-0 h-full justify-evenly" style="height: calc(100vh - 3rem);">
+        {% if game_details %}
+            <p class="text-2xl"><strong>Game Details</strong></p>
+            {% if game_details.error %}
+                <p>Error: {{ game_details.error }}</p>
+            {% else %}
+                <p class="text-xl"><strong>{{ game_details.name }}</strong></p>
+                <p><strong>Description:</strong> {{ game_details.short_description }}</p>
+                <p>
+                    <strong>Genres:</strong>
+                    {% for genre in game_details.genres %}
+                        {{ genre.description }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Price:</strong>
+                    {% if game_details.price_overview %}
+                        {{ game_details.price_overview.final_formatted }}
+                    {% else %}
+                        Free
+                    {% endif %}
+                </p>
+                <p><strong>Release Date:</strong> {{ game_details.release_date.date }}</p>
+                <p><strong>Developer:</strong> {{ game_details.developers.0 }}</p>
+                <p><strong>Publishers:</strong> {{ game_details.publishers.0 }}</p>
+                <img src="{{ game_details.header_image }}" alt="{{ game_details.name }}" class="w-auto rounded-lg"/>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

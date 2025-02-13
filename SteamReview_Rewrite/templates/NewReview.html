@@ -2,9 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>New Review</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" type="text/css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const ratingInputs = document.querySelectorAll('input[name="rating"]');
+            const ratingLabels = document.querySelectorAll('label[for^="rating"]');
+
+            function updateStyles() {
+                // Reset styles for all labels
+                ratingLabels.forEach(label => {
+                    label.classList.remove(
+                        "bg-green-600", "bg-green-400", "bg-yellow-400",
+                        "bg-red-400", "bg-red-600", "text-white"
+                    );
+                    label.classList.add("bg-gray-200");
+                });
+
+                // Apply styles to the selected label
+                const selected = document.querySelector('input[name="rating"]:checked');
+                if (selected) {
+                    const label = document.querySelector(`label[for="${selected.id}"]`);
+                    if (label) {
+                        label.classList.remove("bg-gray-200");
+                        label.classList.add(
+                            selected.value === "++" ? "bg-green-600" :
+                            selected.value === "+" ? "bg-green-400" :
+                            selected.value === "+-" ? "bg-yellow-400" :
+                            selected.value === "-" ? "bg-red-400" : "bg-red-600",
+                            "text-white"
+                        );
+                    }
+                }
+            }
+
+            // Attach event listeners to inputs
+            ratingInputs.forEach(input => {
+                input.addEventListener("change", updateStyles);
+            });
+
+            // Initial update for pre-selected values
+            updateStyles();
+        });
+    </script>
 </head>
-<body>
+<body class="font-sans bg-sky-950 flex">
 {# Ratings for games #}
     <form method="post">
         {% csrf_token %}
@@ -30,9 +73,6 @@
             <label for="review_text" class="text-white mb-2">Your Review:</label>
             <textarea id="review_text" name="review_text" rows="5" class="form-control" placeholder="Write your review here...">{{ request.POST.review_text }}</textarea>
         </div>
-        {# Inputs that store the information of what game was selected for other forms #}
-        <input type="hidden" name="app_id" value="{{ app_id }}">
-        <input type="hidden" name="app_name" value="{{ game_details.name }}">
         {# Button to submit your review #}
         <button type="submit" class="h-6 w-36 h-8 ml-6 rounded-lg text-white text-center transition duration-500 ease-in-out bg-blue-500 hover:bg-green-500 transform hover:-translate-y-1 hover:scale-110">Submit Review</button>
     </form>

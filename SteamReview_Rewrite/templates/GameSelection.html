@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Game Selection</title>
     {% load static %}
-    <link rel="stylesheet" href="../SteamReview/static/css/output.css" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" type="text/css">
 </head>
-<body>
+<body class="font-sans bg-sky-950 flex">
     {# Searching for game #}
     <form method="get" class="bg-sky-800 flex flex-col p-6 m-6 rounded-lg w-64">
         <label for="search" class="text-white mb-2">Search for Game:</label>
