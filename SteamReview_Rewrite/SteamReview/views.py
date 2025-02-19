@@ -22,7 +22,6 @@ def GameSelection(request):
     game_details = None
 
     if request.method == 'POST':
-        #Showing game details after selecting game
         #Getting data from steam site to then display on mine site
         app_id = request.POST.get('game_choice')
         url = f"http://store.steampowered.com/api/appdetails?appids={app_id}"
@@ -43,6 +42,17 @@ def GameSelection(request):
 
 #Page to write your review
 def NewReview(request, app_id):
+    # Getting data from steam site to then display on mine site
+    if app_id:
+        url = f"http://store.steampowered.com/api/appdetails?appids={app_id}"
+        try:
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            api_data = response.json()
+            game_details = api_data.get(str(app_id), {}).get('data', {})
+        except requests.RequestException as e:
+            game_details = {'error': str(e)}
+
     if request.method == 'POST':
         review_text = request.POST.get('review_text')
         rating = request.POST.get('rating')
@@ -81,6 +91,7 @@ def NewReview(request, app_id):
 
     return render(request, 'NewReview.html', {
         'app_id': app_id,
+        'game_details': game_details,
     })
 
 #Page that shows review

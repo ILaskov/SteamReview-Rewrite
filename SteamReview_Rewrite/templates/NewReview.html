@@ -76,5 +76,37 @@
         {# Button to submit your review #}
         <button type="submit" class="h-6 w-36 h-8 ml-6 rounded-lg text-white text-center transition duration-500 ease-in-out bg-blue-500 hover:bg-green-500 transform hover:-translate-y-1 hover:scale-110">Submit Review</button>
     </form>
+
+    {# Game details #}
+    <div class="w-1/4 bg-sky-800 text-white flex flex-col rounded-lg m-6 p-6 fixed right-0 top-0 h-full justify-evenly" style="height: calc(100vh - 3rem);">
+        {% if game_details %}
+            <p class="text-2xl"><strong>Game Details</strong></p>
+            {% if game_details.error %}
+                <p>Error: {{ game_details.error }}</p>
+            {% else %}
+                <p class="text-xl"><strong>{{ game_details.name }}</strong></p>
+                <p><strong>Description:</strong> {{ game_details.short_description }}</p>
+                <p>
+                    <strong>Genres:</strong>
+                    {% for genre in game_details.genres %}
+                        {{ genre.description }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Price:</strong>
+                    {% if game_details.price_overview %}
+                        {{ game_details.price_overview.final_formatted }}
+                    {% else %}
+                        Free
+                    {% endif %}
+                </p>
+                <p><strong>Release Date:</strong> {{ game_details.release_date.date }}</p>
+                <p><strong>Developer:</strong> {{ game_details.developers.0 }}</p>
+                <p><strong>Publishers:</strong> {{ game_details.publishers.0 }}</p>
+                <img src="{{ game_details.header_image }}" alt="{{ game_details.name }}" class="w-auto rounded-lg"/>
+            {% endif %}
+        {% endif %}
+    </div>
+
 </body>
 </html>
