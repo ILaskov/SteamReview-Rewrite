@@ -1,3 +1,6 @@
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,13 +71,25 @@
             <label for="rating--" class="cursor-pointer px-6 py-2 rounded-md bg-gray-200 text-center hover:bg-red-600 hover:text-white transition duration-200 ease-in-out">--</label>
         </div>
 
+        {# If user submitted form without review text #}
+        {% if messages %}
+            <div class="text-white bg-red-600 rounded-lg ml-6 p-2 alert alert-warning alert-dismissible fade show" role="alert">
+                {% for msg in messages %}
+                    {{ msg }}
+                    <button type="button" class="btn-close pl-2 pt-2" data-bs-dismiss="alert" aria-label="Close"></button>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         {# Area to write your review #}
         <div class="bg-sky-800 flex flex-col p-6 m-6 rounded-lg w-3/4">
             <label for="review_text" class="text-white mb-2">Your Review:</label>
             <textarea id="review_text" name="review_text" rows="5" class="form-control" placeholder="Write your review here...">{{ request.POST.review_text }}</textarea>
         </div>
         {# Button to submit your review #}
-        <button type="submit" class="h-6 w-36 h-8 ml-6 rounded-lg text-white text-center transition duration-500 ease-in-out bg-blue-500 hover:bg-green-500 transform hover:-translate-y-1 hover:scale-110">Submit Review</button>
+        <button type="submit" class="h-6 w-36 h-8 ml-6 rounded-lg text-white text-center transition duration-500 ease-in-out bg-blue-500 hover:bg-green-500 transform hover:-translate-y-1 hover:scale-110">Submit Review</button><br>
+        {# Button to go back to game selection #}
+        <a href="{% url 'GameSelection' %}" class="inline-block w-16 mt-6 ml-6 px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Back</a>
     </form>
 
     {# Game details #}

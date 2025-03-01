@@ -1,10 +1,13 @@
 from re import search
+from django.contrib.auth.decorators import login_required
 from .forms import GameSelectForm
-
 from django.shortcuts import render, redirect, get_object_or_404
 from SteamReview.forms import GameSelectForm
 import requests, markdown
 from .models import Review
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout
+from django.contrib import messages
 
 #Creating main page with all reviews ordered by date
 def index(request):
@@ -13,6 +16,7 @@ def index(request):
 
 
 # Page that fetches a site to select a game
+@login_required
 def GameSelection(request):
     # Getting a game to search for
     searched_game = request.GET.get('q', '')
@@ -88,6 +92,12 @@ def NewReview(request, app_id):
 
                 # Redirect to page with review
                 return redirect('ReviewDetails', pk=review.pk)
+        else:
+            messages.error(request, 'No review text provided')
+            return render(request, 'NewReview.html', {
+                'app_id': app_id,
+                'game_details': game_details,
+            })
 
     return render(request, 'NewReview.html', {
         'app_id': app_id,
@@ -96,6 +106,7 @@ def NewReview(request, app_id):
 
 #Page that shows review
 def ReviewDetails(request, pk):
+    #Gets object from database
     review = get_object_or_404(Review, pk=pk)
 
     if review.app_id:
@@ -114,3 +125,35 @@ def ReviewDetails(request, pk):
         'review': review,
         'game_details':game_details,
     })
+
+#Register page
+def Register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            login(request, form.save())
+            return redirect('index')
+    else:
+        form = UserCreationForm()
+    return render(request, "Register.html", {
+        'form': form,
+    })
+
+#Login page
+def Login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            return redirect('index')
+    else:
+        form = AuthenticationForm()
+    return render(request, "Login.html", {
+        'form': form,
+    })
+
+#Loging out
+def Logout(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('index')
