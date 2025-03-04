@@ -12,4 +12,4 @@ class Review(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.app_id} - {self.review_text} by {self.user.username}"
+        return f"{self.app_id} - {self.review_text} at {self.timestamp}"

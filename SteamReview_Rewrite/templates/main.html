@@ -1,0 +1,18 @@
+{% load static %}
+{% load custom_filters %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Steam Review+ Rewrite</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" type="text/css">
+    {% block additional %}
+    {% endblock %}
+</head>
+{% block page %}
+{% endblock %}
+</html>

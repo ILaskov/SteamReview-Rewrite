@@ -93,6 +93,7 @@ def NewReview(request, app_id):
                 # Redirect to page with review
                 return redirect('ReviewDetails', pk=review.pk)
         else:
+            # Gives an error message if there was no review text
             messages.error(request, 'No review text provided')
             return render(request, 'NewReview.html', {
                 'app_id': app_id,

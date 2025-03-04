@@ -210,8 +210,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-size: inherit;
-  font-weight: inherit;
+
 }
 
 /*
@@ -445,7 +444,7 @@ hr,
 figure,
 p,
 pre {
-  margin: 0;
+
 }
 
 fieldset {
@@ -615,6 +614,10 @@ video {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 6;
+}
+
+.block {
+  display: block;
 }
 
 .inline-block {
@@ -814,8 +817,9 @@ video {
   padding: 1.5rem;
 }
 
-.p-0 {
-  padding: 0px;
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
 .px-4 {
@@ -833,17 +837,8 @@ video {
   padding-bottom: 0.5rem;
 }
 
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-
 .pl-2 {
   padding-left: 0.5rem;
-}
-
-.pt-3 {
-  padding-top: 0.75rem;
 }
 
 .pt-2 {
@@ -852,10 +847,6 @@ video {
 
 .text-center {
   text-align: center;
-}
-
-.align-middle {
-  vertical-align: middle;
 }
 
 .font-sans {

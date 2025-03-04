@@ -1,12 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Review nr.{{ review.pk }}</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}" type="text/css">
-</head>
+{% extends 'main.html' %}
+
+{% block page %}
 <body class="font-sans bg-sky-950 flex">
     <div class="basis-3/5 bg-sky-800 rounded-lg m-6 p-6 overflow-auto">
         {# Displaying games rating #}
@@ -27,7 +21,7 @@
         {# Time and date of when the review was posted #}
         <p class="text-sm text-gray-300 mt-4">Posted on {{ review.timestamp }}</p>
         {# Button to get you back to main page #}
-        <a href="{% url 'index' %}" class="inline-block mt-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Back</a>
+        <a href="{% url 'index' %}" class="inline-block mt-6 px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Back</a>
     </div>
     
     {# Game details #}
@@ -61,4 +55,4 @@
         {% endif %}
     </div>
 </body>
-</html>
+{% endblock %}

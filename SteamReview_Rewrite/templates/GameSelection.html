@@ -1,26 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Game Selection</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/output.css' %}" type="text/css">
-</head>
-<body class="font-sans bg-sky-950 flex flex-col justify-center items-center h-screen">
-    {# Searching for game #}
-    <form method="get" class="bg-sky-800 flex flex-col p-6 m-6 rounded-lg w-64">
-        <label for="search" class="text-white mb-2">Search for Game:</label>
-        <input type="text" id="search" name="q" value="{{ request.GET.q }}">
-        <button type="submit" class="h-6 w-16 mt-3 ml-2 rounded-lg text-white transition duration-500 ease-in-out bg-blue-500 hover:bg-green-500 transform hover:-translate-y-1 hover:scale-110">Search</button>
-    </form>
+{% extends 'main.html' %}
 
-    {# Selecting game #}
-    <form method="post" class="bg-sky-800 flex flex-col p-6 m-6 rounded-lg w-1/3">
-        {% csrf_token %}
-        <label for="form.app_choice.label_tag" class="text-white mb-2">{{ form.game_choice.label }}</label>
-        {{ form.game_choice }}
-        <button type="submit" class="h-6 w-16 mt-3 ml-2 rounded-lg text-white transition duration-500 ease-in-out bg-blue-500 hover:bg-green-500 transform hover:-translate-y-1 hover:scale-110">Select</button>
-    </form>
-    <a href="{% url 'index' %}" class="inline-block w-16 mt-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Back</a>
-</body>
-</html>
+{% block page %}
+    <body class="font-sans bg-sky-950 flex flex-col justify-center items-center h-screen">
+        {# Searching for game #}
+        <form method="get" class="bg-sky-800 flex flex-col p-6 m-6 rounded-lg w-64">
+            <label for="search" class="text-white mb-2">Search for Game:</label>
+            <input type="text" id="search" name="q" value="{{ request.GET.q }}">
+            <button type="submit" class="h-6 w-16 mt-3 ml-2 rounded-lg text-white transition duration-500 ease-in-out bg-blue-500 hover:bg-green-500 transform hover:-translate-y-1 hover:scale-110">Search</button>
+        </form>
+
+        {# Selecting game #}
+        <form method="post" class="bg-sky-800 flex flex-col p-6 m-6 rounded-lg w-1/3">
+            {% csrf_token %}
+            <label for="form.app_choice.label_tag" class="text-white mb-2">{{ form.game_choice.label }}</label>
+            {{ form.game_choice }}
+            <button type="submit" class="h-6 w-16 mt-3 ml-2 rounded-lg text-white transition duration-500 ease-in-out bg-blue-500 hover:bg-green-500 transform hover:-translate-y-1 hover:scale-110">Select</button>
+        </form>
+        <a href="{% url 'index' %}" class="inline-block w-16 mt-6 px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Back</a>
+    </body>
+{% endblock %}
